@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: esports-scouting-api
+    runtime: go
+    buildCommand: go build -o main cmd/api/main.go
+    startCommand: ./main
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: GRID_API_KEY
+        sync: false
+      - key: GIN_MODE
+        value: release
