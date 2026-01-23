@@ -1,4 +1,4 @@
-# Esports Scouting Backend API
+# Valorant-League-Of-Legends-Scouting-Report-Analyzer
 
 > Comprehensive REST API for esports team analysis and scouting powered by Grid.gg API
 
