@@ -1,12 +1,10 @@
-# Esports Scouting Backend API
+# Valorant-League-Of-Legends-Scouting-Report-Analyzer
 
 > Comprehensive REST API for esports team analysis and scouting powered by Grid.gg API
 
 [![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)](https://golang.org)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![API Status](https://img.shields.io/badge/status-production-success)](https://railway.app)
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # 1. Clone repository
@@ -161,7 +159,7 @@ curl "http://localhost:8080/api/v1/team/trends?name=Sentinels&title=valorant"
 
 ---
 
-#### 4. ✨ NEW: Comprehensive Scouting Report
+#### 4. Comprehensive Scouting Report
 ```http
 GET /api/v1/scouting-report?opponent={name}&myTeam={name}&title={title}
 ```
@@ -235,15 +233,15 @@ curl "http://localhost:8080/api/v1/scouting-report?opponent=G2%20Esports&myTeam=
 ```
 
 **Key Features:**
-- ✅ Combines comparison, trends, and meta analysis
-- ✅ Prioritized actionable insights (HIGH/MEDIUM/LOW)
-- ✅ Parallel data fetching (<5s response time with cache)
-- ✅ 1-hour cache for optimal performance
-- ✅ Graceful degradation if any data source fails
+- Combines comparison, trends, and meta analysis
+- Prioritized actionable insights (HIGH/MEDIUM/LOW)
+- Parallel data fetching (<5s response time with cache)
+- 1-hour cache for optimal performance
+- Graceful degradation if any data source fails
 
 ---
 
-#### 5. ✨ NEW: Team Search (Autocomplete)
+#### 5. Team Search (Autocomplete)
 ```http
 GET /api/v1/teams/search?q={query}&title={title}
 ```
@@ -280,7 +278,7 @@ curl "http://localhost:8080/api/v1/teams/search?q=cloud&title=valorant"
 
 ---
 
-#### 6. ✨ NEW: Meta Analysis
+#### 6. : Meta Analysis
 ```http
 GET /api/v1/meta?title={title}&tournamentId={id}
 ```
@@ -399,20 +397,20 @@ curl "http://localhost:8080/api/v1/teams?title=lol&validateData=false"
 
 ## 🎯 Key Features
 
-### 1. Graduated Fallback System ✅
+### 1. Graduated Fallback System 
 Automatically expands time windows when insufficient data:
 ```
 LAST_WEEK (0 matches) → LAST_MONTH (4 matches) ✓
 ```
 No more misleading identical comparisons!
 
-### 2. Data Access Validation ✅ **NEW**
+### 2. Data Access Validation 
 `/api/v1/teams` endpoint validates Series State data access:
 - Only returns teams you can actually query
 - Prevents "500 Internal Server Error" from inaccessible teams
 - Proper `404 Not Found` errors with helpful messages
 
-### 3. Proper Error Codes ✅ **NEW**
+### 3. Proper Error Codes 
 - `404`: Team not found or insufficient data (with clear reason)
 - `400`: Missing/invalid parameters
 - `500`: Only for unexpected server errors
@@ -453,7 +451,7 @@ Scouting report fetches all data simultaneously:
 - Meta context
 - Total time: ~5-8 seconds (uncached)
 
-### 7. Title Validation ✅ **NEW**
+### 7. Title Validation 
 All endpoints validate `title` parameter:
 - Must be `valorant` or `lol`
 - Returns clear error if teams from different games are compared
@@ -465,16 +463,15 @@ All endpoints validate `title` parameter:
 
 ### Required
 ```bash
-GRID_API_KEY=your_api_key_here       # Grid.gg hackathon API key
-REDIS_URL=redis://localhost:6379     # Redis connection string
-DATABASE_URL=postgresql://...        # PostgreSQL connection string
-```
-
-### Optional
-```bash
-PORT=8080                            # Server port (default: 8080)
-TRUSTED_PROXIES=10.0.0.0/8          # Trusted proxy IPs (comma-separated)
-GIN_MODE=release                     # Gin mode (debug/release)
+PORT=Your desired port
+REDIS_URL=Your Redis Url
+GRID_API_KEY=Your Grid Api Key
+DATABASE_URL=Your Neon Database Url
+NEON_API_KEY=Your Neon APi Key
+TRUSTED_PROXIES=Your desired proxy
+datasource.url=Your Neon datasource url
+datasource.username=Your neon db username
+datasource.password=Your neon db password                   
 ```
 
 ---
@@ -493,35 +490,6 @@ Install all dependencies:
 ```bash
 go mod download
 ```
-
----
-
-## 🚂 Railway Deployment
-
-### 1. Connect Repository
-1. Go to [Railway.app](https://railway.app)
-2. Click "New Project" → "Deploy from GitHub repo"
-3. Select your repository
-
-### 2. Set Environment Variables
-In Railway dashboard:
-```
-GRID_API_KEY = your_hackathon_api_key
-REDIS_URL = (auto-configured by Railway Redis plugin)
-DATABASE_URL = (auto-configured by Railway PostgreSQL plugin)
-PORT = 8080
-```
-
-### 3. Add Services
-- **PostgreSQL**: Click "+ New" → "Database" → "PostgreSQL"
-- **Redis**: Click "+ New" → "Database" → "Redis"
-
-### 4. Deploy
-Railway automatically detects `railway.json` and deploys!
-
-**Health Check:** Railway pings `/health` every 30s
-
----
 
 ## ⚡ Performance Optimization
 
@@ -542,33 +510,6 @@ Grid.gg API has rate limits:
 - Be respectful of API quotas
 - Cache aggressively
 - Use Redis for request deduplication
-
----
-
-## 🧪 Testing
-
-### Manual Testing
-```bash
-# 1. Health check
-curl http://localhost:8080/health
-
-# 2. Compare teams
-curl "http://localhost:8080/api/v1/compare?team1=T1&team2=Gen.G%20Esports&title=lol"
-
-# 3. Team trends
-curl "http://localhost:8080/api/v1/team/trends?name=T1&title=lol"
-
-# 4. Scouting report (Feature #7)
-curl "http://localhost:8080/api/v1/scouting-report?opponent=T1&myTeam=Fnatic&title=lol"
-
-# 5. Team search
-curl "http://localhost:8080/api/v1/teams/search?q=t1&title=lol"
-```
-
-### Automated Testing
-```bash
-go test ./...
-```
 
 ---
 
@@ -631,33 +572,6 @@ curl "http://localhost:8080/api/v1/compare?team1=FURIA&team2=NRG&title=valorant"
 
 ---
 
-## 🎉 Feature #7 Implementation Complete
-
-### What's New
-✅ `/api/v1/scouting-report` - Comprehensive combined report  
-✅ `/api/v1/meta` - Meta analysis endpoint (placeholder)  
-✅ `/api/v1/teams/search` - Autocomplete for team names  
-✅ Parallel data fetching for <10s response times  
-✅ Prioritized key insights (HIGH/MEDIUM/LOW)  
-✅ Cache optimization for <50ms cached responses  
-✅ Railway deployment configuration  
-✅ Comprehensive error handling
-
-### Production Ready
-- ✅ All endpoints tested and working
-- ✅ Graduated fallback prevents misleading data
-- ✅ Graceful degradation for missing data sources
-- ✅ Clear error messages with actionable suggestions
-- ✅ Railway deployment configuration included
-
----
-
-## 📄 License
-
-MIT License - See [LICENSE](LICENSE) file
-
----
-
 ## 👥 Contributing
 
 1. Fork the repository
@@ -669,10 +583,10 @@ MIT License - See [LICENSE](LICENSE) file
 ---
 
 ## 🙏 Acknowledgments
-
+-**ALL GLORY To GOD**
 - **Grid.gg** for hackathon API access
 - **Cloud9 & JetBrains** for organizing the hackathon
-- **Railway** for easy deployment platform
+- **Render** for easy deployment platform
 
 ---
 
