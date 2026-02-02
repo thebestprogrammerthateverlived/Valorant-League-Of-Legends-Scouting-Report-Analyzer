@@ -34,8 +34,8 @@ func NewHandler(pg *repository.PostgresRepo, redis *cache.RedisClient, grid *gri
 		gridClient:    grid,
 		compService:   services.NewComparisonService(grid, redis, pg),
 		trendsService: services.NewTrendsService(grid, redis),
-		metaService:   services.NewMetaService(grid, redis),        // ✅ NEW
-		reportService: services.NewReportService(grid, redis, pg),  // ✅ NEW
+		metaService:   services.NewMetaService(grid, redis),        //  NEW
+		reportService: services.NewReportService(grid, redis, pg),  //  NEW
 	}
 }
 
@@ -344,14 +344,79 @@ func (h *Handler) GenerateScoutingReport(c *gin.Context) {
 }
 
 // SearchTeams provides autocomplete for team names
+// func (h *Handler) SearchTeams(c *gin.Context) {
+// 	query := strings.ToLower(c.Query("q"))
+// 	title := c.Query("title")
+
+// 	if query == "" || title == "" {
+// 		c.JSON(http.StatusBadRequest, gin.H{
+// 			"error":   "q and title parameters are required",
+// 			"example": "/api/v1/teams/search?q=cloud&title=valorant",
+// 		})
+// 		return
+// 	}
+
+// 	ctx, cancel := context.WithTimeout(c.Request.Context(), 10*time.Second)
+// 	defer cancel()
+
+// 	// Fetch all teams and filter
+// 	teams, err := h.gridClient.GetAvailableTeams(ctx, title, nil)
+// 	if err != nil {
+// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+// 		return
+// 	}
+
+// 	// Filter and rank results
+// 	var results []models.TeamSearchResult
+// 	for _, teamName := range teams {
+// 		lowerName := strings.ToLower(teamName)
+// 		if strings.Contains(lowerName, query) {
+// 			relevance := 50
+// 			if strings.HasPrefix(lowerName, query) {
+// 				relevance = 100
+// 			} else if strings.HasPrefix(lowerName, query[:1]) {
+// 				relevance = 75
+// 			}
+
+// 			results = append(results, models.TeamSearchResult{
+// 				Name:        teamName,
+// 				DisplayName: teamName,
+// 				Title:       title,
+// 				Relevance:   relevance,
+// 			})
+// 		}
+
+// 		if len(results) >= 10 {
+// 			break
+// 		}
+// 	}
+
+// 	c.JSON(http.StatusOK, gin.H{
+// 		"query":   query,
+// 		"results": results,
+// 		"count":   len(results),
+// 	})
+// }
+
+// SearchTeams provides autocomplete for team names
 func (h *Handler) SearchTeams(c *gin.Context) {
-	query := strings.ToLower(c.Query("q"))
-	title := c.Query("title")
+	// ✅ FIXED: Accept both "query" and "q" parameters
+	query := c.Query("query")
+	if query == "" {
+		query = c.Query("q") // Fallback to "q" for backwards compatibility
+	}
+	query = strings.ToLower(query)
+
+	// ✅ FIXED: Accept both "game" and "title" parameters
+	title := c.Query("game")
+	if title == "" {
+		title = c.Query("title") // Fallback to "title"
+	}
 
 	if query == "" || title == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "q and title parameters are required",
-			"example": "/api/v1/teams/search?q=cloud&title=valorant",
+			"error":   "query and game parameters are required",
+			"example": "/api/v1/search?query=cloud&game=valorant",
 		})
 		return
 	}

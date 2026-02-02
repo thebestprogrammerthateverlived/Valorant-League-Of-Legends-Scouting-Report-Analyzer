@@ -583,11 +583,9 @@ curl "http://localhost:8080/api/v1/compare?team1=FURIA&team2=NRG&title=valorant"
 ---
 
 ## 🙏 Acknowledgments
--**ALL GLORY To GOD**
+-**ALL GLORY TO GOD**
 - **Grid.gg** for hackathon API access
 - **Cloud9 & JetBrains** for organizing the hackathon
 - **Render** for easy deployment platform
 
 ---
-
-**Built with ❤️ for the Cloud9 x JetBrains Hackathon**
