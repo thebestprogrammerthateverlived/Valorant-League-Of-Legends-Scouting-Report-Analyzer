@@ -76,7 +76,7 @@ type ComparisonReport struct {
 }
 
 type ComparisonTeamData struct {
-	Name  string         `json:"name"`
+	Name  string          `json:"name"`
 	Stats ComparisonStats `json:"stats"`
 }
 
@@ -176,34 +176,32 @@ type GridEvent struct {
 }
 
 type SeriesStats struct {
-	SeriesID    string  `json:"seriesId"`    // Added for postgres.go
+	SeriesID    string  `json:"seriesId"` // Added for postgres.go
 	TeamID      string  `json:"teamId"`
 	TeamName    string  `json:"teamName"`
 	GamesPlayed int     `json:"gamesPlayed"`
 	Wins        int     `json:"wins"`
-	Won         bool    `json:"won"`       // Did the team win this series
-	Kills       int     `json:"kills"`     // Renamed from TotalKills
-	Deaths      int     `json:"deaths"`    // Renamed from TotalDeaths
-	Assists     int     `json:"assists"`   // Added for postgres.go
-	RoundsWon   int     `json:"roundsWon"` // Added for postgres.go
+	Won         bool    `json:"won"`        // Did the team win this series
+	Kills       int     `json:"kills"`      // Renamed from TotalKills
+	Deaths      int     `json:"deaths"`     // Renamed from TotalDeaths
+	Assists     int     `json:"assists"`    // Added for postgres.go
+	RoundsWon   int     `json:"roundsWon"`  // Added for postgres.go
 	RoundsLost  int     `json:"roundsLost"` // Added for postgres.go
 	KillsAvg    float64 `json:"killsAvg"`
 	DeathsAvg   float64 `json:"deathsAvg"`
 	KDRatio     float64 `json:"kdRatio"`
 }
 
-// ============================================================================
 // FEATURE #7: META ANALYSIS & SCOUTING REPORT MODELS
-// ============================================================================
 
 // MetaPick represents a champion/agent pick with statistics
 type MetaPick struct {
-	Name      string  `json:"name"`
-	PickRate  float64 `json:"pickRate"`
-	WinRate   float64 `json:"winRate"`
-	Tier      string  `json:"tier"` // S, A, B, C
-	Trending  string  `json:"trending"` // "rising", "stable", "declining"
-	GamesPlayed int   `json:"gamesPlayed"`
+	Name        string  `json:"name"`
+	PickRate    float64 `json:"pickRate"`
+	WinRate     float64 `json:"winRate"`
+	Tier        string  `json:"tier"`     // S, A, B, C
+	Trending    string  `json:"trending"` // "rising", "stable", "declining"
+	GamesPlayed int     `json:"gamesPlayed"`
 }
 
 // MetaShift represents changes in the meta
@@ -225,8 +223,8 @@ type MetaReport struct {
 
 // MetaContext provides meta-related context for a team
 type MetaContext struct {
-	OpponentVsMeta []string `json:"opponentVsMeta"`
-	YourTeamVsMeta []string `json:"yourTeamVsMeta"`
+	OpponentVsMeta  []string `json:"opponentVsMeta"`
+	YourTeamVsMeta  []string `json:"yourTeamVsMeta"`
 	Recommendations []string `json:"recommendations"`
 }
 
@@ -245,15 +243,15 @@ type CacheStatus struct {
 
 // ScoutingReport is the comprehensive combined report
 type ScoutingReport struct {
-	ReportID     string           `json:"reportId"`
-	GeneratedAt  time.Time        `json:"generatedAt"`
-	Matchup      MatchupInfo      `json:"matchup"`
-	Comparison   ComparisonReport `json:"comparison"`
-	Trends       TrendsInfo       `json:"trends"`
-	MetaContext  MetaContext      `json:"metaContext,omitempty"`
-	KeyInsights  []KeyInsight     `json:"keyInsights"`
-	Confidence   Confidence       `json:"confidence"`
-	CacheStatus  CacheStatus      `json:"cacheStatus"`
+	ReportID    string           `json:"reportId"`
+	GeneratedAt time.Time        `json:"generatedAt"`
+	Matchup     MatchupInfo      `json:"matchup"`
+	Comparison  ComparisonReport `json:"comparison"`
+	Trends      TrendsInfo       `json:"trends"`
+	MetaContext MetaContext      `json:"metaContext,omitempty"`
+	KeyInsights []KeyInsight     `json:"keyInsights"`
+	Confidence  Confidence       `json:"confidence"`
+	CacheStatus CacheStatus      `json:"cacheStatus"`
 }
 
 // MatchupInfo describes the teams being compared

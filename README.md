@@ -1,6 +1,6 @@
 # Valorant-League-Of-Legends-Scouting-Report-Analyzer
 
-> Comprehensive REST API for esports team analysis and scouting powered by Grid.gg API
+> Comprehensive REST API for esports team analysis and scouting powered by Grid.gg API -Scouter
 
 [![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)](https://golang.org)
 

@@ -23,8 +23,8 @@ type Handler struct {
 	gridClient    *grid.Client
 	compService   *services.ComparisonService
 	trendsService *services.TrendsService
-	metaService   *services.MetaService      // ✅ NEW
-	reportService *services.ReportService    // ✅ NEW
+	metaService   *services.MetaService   // ✅ NEW
+	reportService *services.ReportService // ✅ NEW
 }
 
 func NewHandler(pg *repository.PostgresRepo, redis *cache.RedisClient, grid *grid.Client) *Handler {
@@ -34,8 +34,8 @@ func NewHandler(pg *repository.PostgresRepo, redis *cache.RedisClient, grid *gri
 		gridClient:    grid,
 		compService:   services.NewComparisonService(grid, redis, pg),
 		trendsService: services.NewTrendsService(grid, redis),
-		metaService:   services.NewMetaService(grid, redis),        //  NEW
-		reportService: services.NewReportService(grid, redis, pg),  //  NEW
+		metaService:   services.NewMetaService(grid, redis),       //  NEW
+		reportService: services.NewReportService(grid, redis, pg), //  NEW
 	}
 }
 
@@ -71,7 +71,7 @@ func (h *Handler) CompareTeams(c *gin.Context) {
 
 	if team1 == "" || team2 == "" || title == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "team1, team2, and title are required",
+			"error":   "team1, team2, and title are required",
 			"example": "/api/v1/compare?team1=Cloud9&team2=Sentinels&title=valorant",
 		})
 		return
@@ -81,8 +81,8 @@ func (h *Handler) CompareTeams(c *gin.Context) {
 	title = strings.ToLower(title)
 	if title != "valorant" && title != "lol" && title != "leagueoflegends" {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "invalid title parameter",
-			"message": "title must be 'valorant' or 'lol'",
+			"error":    "invalid title parameter",
+			"message":  "title must be 'valorant' or 'lol'",
 			"provided": title,
 		})
 		return
@@ -218,7 +218,7 @@ func (h *Handler) GetTeamTrends(c *gin.Context) {
 				"error":          teamErr.Error(),
 				"team":           teamErr.TeamName,
 				"availableTeams": teamErr.AvailableTeams,
-				"message":        fmt.Sprintf("Team '%s' did not play in the available tournaments. Check the title val or lol and try again", teamErr.TeamName,),
+				"message":        fmt.Sprintf("Team '%s' did not play in the available tournaments. Check the title val or lol and try again", teamErr.TeamName),
 			})
 			return
 		}
@@ -251,9 +251,7 @@ func (h *Handler) GetTeamTrends(c *gin.Context) {
 	c.JSON(http.StatusOK, trends)
 }
 
-// ============================================================================
 // FEATURE #7: NEW ENDPOINTS
-// ============================================================================
 
 // GetMeta returns meta analysis for a game title
 func (h *Handler) GetMeta(c *gin.Context) {
@@ -463,9 +461,7 @@ func (h *Handler) SearchTeams(c *gin.Context) {
 	})
 }
 
-// ============================================================================
 // EXISTING ENDPOINTS
-// ============================================================================
 
 func (h *Handler) GetAvailableTitles(c *gin.Context) {
 	titles := []gin.H{
