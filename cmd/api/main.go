@@ -80,6 +80,7 @@ func securityHeadersMiddleware() gin.HandlerFunc {
 func corsMiddleware() gin.HandlerFunc {
 	allowedOrigins := map[string]bool{
 		"https://frontend-esports-analyzer-valorant.vercel.app": true,
+        // "http://localhost:5173": true,
 	}
 
 	return func(c *gin.Context) {

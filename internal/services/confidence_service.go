@@ -2,7 +2,6 @@ package services
 
 import (
 	"fmt"
-
 	"github.com/yourusername/esports-scouting-backend/internal/models"
 )
 

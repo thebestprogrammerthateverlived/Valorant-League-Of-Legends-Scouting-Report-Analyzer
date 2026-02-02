@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"math"
-
 	"github.com/yourusername/esports-scouting-backend/internal/grid"
 	"github.com/yourusername/esports-scouting-backend/internal/models"
 	"github.com/yourusername/esports-scouting-backend/pkg/cache"
@@ -21,57 +20,6 @@ func NewTrendsService(gc *grid.Client, rc *cache.RedisClient) *TrendsService {
 		cache:      rc,
 	}
 }
-
-// AnalyzeTrends compares recent performance to overall baseline
-//func (s *TrendsService) AnalyzeTrends(ctx context.Context, teamName, title string, tournamentIDs []string) (*models.TrendReport, error) {
-//	// Find the team
-//	team, err := s.gridClient.FindTeamByName(ctx, teamName, title)
-//	if err != nil {
-//		return nil, fmt.Errorf("failed to find team %s: %w", teamName, err)
-//	}
-//
-//	// Fetch overall stats (3 months baseline)
-//	overallStats, err := s.gridClient.GetTeamStatistics(ctx, team.ID, title, models.Last3Months, tournamentIDs)
-//	if err != nil {
-//		return nil, fmt.Errorf("failed to fetch overall stats: %w", err)
-//	}
-//
-//	// Fetch recent stats (last week)
-//	recentStats, err := s.gridClient.GetTeamStatistics(ctx, team.ID, title, models.LastWeek, tournamentIDs)
-//	if err != nil {
-//		return nil, fmt.Errorf("failed to fetch recent stats: %w", err)
-//	}
-//
-//	// Build period stats
-//	overall := models.PeriodStats{
-//		TimeWindow: models.Last3Months,
-//		WinRate:    overallStats.WinRate,
-//		KDRatio:    overallStats.KDRatio,
-//		Matches:    overallStats.MatchesPlayed,
-//	}
-//
-//	recent := models.PeriodStats{
-//		TimeWindow: models.LastWeek,
-//		WinRate:    recentStats.WinRate,
-//		KDRatio:    recentStats.KDRatio,
-//		Matches:    recentStats.MatchesPlayed,
-//	}
-//
-//	// Analyze trends and generate alerts
-//	alerts := s.generateAlerts(overall, recent)
-//
-//	// Calculate confidence for trend analysis
-//	confidence := s.calculateTrendConfidence(recent.Matches, overall.Matches)
-//
-//	return &models.TrendReport{
-//		Team:       team.Name,
-//		Title:      title,
-//		Overall:    overall,
-//		Recent:     recent,
-//		Alerts:     alerts,
-//		Confidence: confidence,
-//	}, nil
-//}
 
 // AnalyzeTrends compares recent performance to overall baseline
 func (s *TrendsService) AnalyzeTrends(ctx context.Context, teamName, title string, tournamentIDs []string) (*models.TrendReport, error) {
