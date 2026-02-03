@@ -27,6 +27,7 @@ go.work.sum
 # ========================
 .env
 ProjectFiles.txt
+product_explanation.txt
 
 # ========================
 # Logs
